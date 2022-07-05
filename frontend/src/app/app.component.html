@@ -1,6 +1,15 @@
 <div class="content" role="main">
-  <p style="font-size: large">Almost before we knew it, we had left the ground.</p>
-  <mat-icon aria-hidden="false" color="primary" aria-label="Example home icon">mail</mat-icon>
-  <router-outlet></router-outlet>
+  <section class="app-container">
+    <header>
+      <mat-toolbar color="primary">
+        <span routerLink="/" [style.cursor]="'pointer'">Media Viewer</span>
+      </mat-toolbar>
+    </header>
+    <section class="content-container">
+      <button mat-button [routerLink]="'/login'">login</button>
+      <button mat-button [routerLink]="'/register'">register</button>
+      <router-outlet></router-outlet>
+    </section>
+  </section>
 </div>
 

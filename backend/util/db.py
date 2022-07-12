@@ -1,12 +1,8 @@
 from neo4j import GraphDatabase
-from dotenv import load_dotenv, find_dotenv
-import os
+from backend.util.config import config
 
-env_file = find_dotenv('.env')
-load_dotenv(env_file)
-
-uri = os.environ.get('NEO4J_URI')
-username = os.environ.get('NEO4J_USERNAME')
-password = os.environ.get('NEO4J_PASSWORD')
+uri = config['NEO4J']['URI']
+username = config['NEO4J']['USERNAME']
+password = config['NEO4J']['PASSWORD']
 
 neo4j_driver = GraphDatabase.driver(uri, auth=(username, password))

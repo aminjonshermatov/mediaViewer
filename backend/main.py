@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from datetime import datetime
 
-from backend.v1.util import neo4j_driver
-from backend.v1.models.FileNode import NodeType
+from backend.util import neo4j_driver
+from backend.models.FileNode import NodeType
 
-import backend.v1 as v1
+import backend.routes.v1 as v1
 
 app = FastAPI()
 

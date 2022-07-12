@@ -68,8 +68,8 @@ cql_relations = '''UNWIND $relations as rel
 
 cql_indexes = [
     '''CREATE INDEX uuid_ FOR (n:FileNode) on (n.uuid)''',
-    '''CREATE INDEX file_path_ FOR (n:FileNode) on (n.file_path_)''',
-    '''CREATE INDEX extension_ FOR (n:FileNode) on (n.extension_)''',
+    '''CREATE INDEX file_path_ FOR (n:FileNode) on (n.file_path)''',
+    '''CREATE INDEX extension_ FOR (n:FileNode) on (n.extension)''',
 ]
 
 

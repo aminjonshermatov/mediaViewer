@@ -1,5 +1,5 @@
 #! /usr/bin/bash
 
-./parser.sh &>> parser.log
-./backend.sh &>> backend.log
-./frontend.sh &>> frontend.log
+{ ./parser.sh >> parser.log 2>&1; } &
+{ ./backend.sh >> backend.log 2>&1; } &
+{ ./frontend.sh >> frontend.log 2>&1; } &

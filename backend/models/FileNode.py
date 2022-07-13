@@ -9,7 +9,7 @@ class NodeType(str, Enum):
 
 
 class FileNode(BaseModel):
-    id:             str
+    uuid:           str
     title:          str
     type:           NodeType
     extension:      str

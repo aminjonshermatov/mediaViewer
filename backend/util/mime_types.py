@@ -3,6 +3,7 @@ MEDIA_TYPES = {
     'abw':      'application/x-abiword',
     'arc':      'application/x-freearc',
     'avif':     'image/avif',
+    'avi':      'video/x-msvideo',
     'azw':      'application/vnd.amazon.ebook',
     'bin':      'application/octet-stream',
     'bmp':      'image/bmp',

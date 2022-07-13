@@ -42,9 +42,6 @@ def check_path(filename):
             a = p[len(path):].split('/')
             if os.path.isfile(p):
                 utc = str(datetime.utcnow())
-                """date = utc[0]
-                time = utc[1].split('.')[0]
-                date_time = "date: "+date+"; time: "+time"""
 
                 sql = "insert into mediaFiles (file_name, directory_name, path, is_visible, added_date, updated_date) " \
                       "values ('"+a[-1]+"', '"+a[1]+"', '"+p+"', 1,'"+utc+"','"+utc+"');"

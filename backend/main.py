@@ -1,11 +1,22 @@
 import os
 from fastapi import FastAPI, HTTPException, Request, status
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import StreamingResponse
 from typing import BinaryIO
 
 from backend.util import db, mime_types
 
 app = FastAPI()
+
+origins = ["http://localhost:4200"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get('/')
@@ -25,7 +36,7 @@ def read_directories():
 def read_files(directory_name: str):
     cur_dir = os.getcwd()
     connection = db.create_connection(cur_dir + "/backend/parser/data.db")
-    sql = "select id, file_name, path from mediaFiles where directory_name='" + directory_name + "' and is_visible=1;"
+    sql = "select id, file_name from mediaFiles where directory_name='" + directory_name + "' and is_visible=1;"
     db_files = db.execute_read_query(connection, sql)
 
     if not db_files:

@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-
-import { NodeDto } from './dto/NodeDto';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +6,4 @@ import { NodeDto } from './dto/NodeDto';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  mediaTypes: NodeDto[] = [];
-
-  toggle() {
-    console.log('toggle');
-  }
 }

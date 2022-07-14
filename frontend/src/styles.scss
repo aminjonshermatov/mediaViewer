@@ -2,3 +2,15 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Poppins; }
+
+snack-bar-container.success {
+  background: rgb(65, 252, 134);
+}
+
+snack-bar-container.error {
+  background: #F44336;
+}
+
+snack-bar-container.notification {
+  color:white;
+}

@@ -1,4 +1,9 @@
-export class File {
+export interface IFile {
+  id: number;
+  title: string;
+}
+
+export class File implements IFile{
   id: number;
   title: string;
 

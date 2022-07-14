@@ -1,12 +1,14 @@
-<p>node works!</p>
 <ul>
-  <li *ngFor="let folder of folders$ | async">name: <b>{{ folder.name }}</b></li>
-</ul>
-
-<ul>
+  {{ files$ | async | json }}
   <li *ngFor="let file of files$ | async">
-    id: <b>{{ file.id }}</b>
-    <br/>
-    title: <b>{{ file.title }}</b>
+    <ng-container *ngIf="isFiles$ | async">
+      id: <b>{{ file.id }}</b>
+      <br/>
+      title: <b>{{ file.title }}</b>
+    </ng-container>
+    <ng-container *ngIf="!(isFiles$ | async)">
+      name: <b [routerLink]="[file.name]">{{ file.name }}</b>
+    </ng-container>
+
   </li>
 </ul>

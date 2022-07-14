@@ -6,7 +6,7 @@ from typing import BinaryIO
 
 from backend.util import db, mime_types
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 
 origins = ["http://localhost:4200"]
 

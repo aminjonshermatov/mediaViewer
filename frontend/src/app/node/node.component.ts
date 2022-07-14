@@ -3,8 +3,8 @@ import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 
 import {NodeService} from "./node.service";
-import {Folder} from "./models/Folder";
-import {File} from "./models/File";
+import {IFolder} from "./models/Folder";
+import {IFile} from "./models/File";
 
 @Component({
   selector: 'app-node',
@@ -13,8 +13,8 @@ import {File} from "./models/File";
 })
 export class NodeComponent implements OnInit {
 
-  public readonly files$: Observable<File[]> = this.nodeService.filesSub$.asObservable();
-  public readonly folders$: Observable<Folder[]> = this.nodeService.foldersSub$.asObservable();
+  public readonly files$: Observable<(IFolder | IFile)[]> = this.nodeService.filesSub$.asObservable();
+  public readonly isFiles$: Observable<boolean> = this.nodeService.isFilesSub$.asObservable();
 
   constructor(private readonly route: ActivatedRoute,
               private readonly nodeService: NodeService) { }

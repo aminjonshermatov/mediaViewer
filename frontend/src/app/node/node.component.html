@@ -1,14 +1,12 @@
-<ul>
-  {{ files$ | async | json }}
-  <li *ngFor="let file of files$ | async">
+<span>Breakpoint: {{ cols$ | async }}</span>
+
+<mat-grid-list [cols]="cols$ | async" rowHeight="11:10">
+  <mat-grid-tile *ngFor="let file of $any(files$) | async">
     <ng-container *ngIf="isFiles$ | async">
-      id: <b>{{ file.id }}</b>
-      <br/>
-      title: <b>{{ file.title }}</b>
+      <app-file [file]="file"></app-file>
     </ng-container>
     <ng-container *ngIf="!(isFiles$ | async)">
-      name: <b [routerLink]="[file.name]">{{ file.name }}</b>
+      <app-folder [folder]="file"></app-folder>
     </ng-container>
-
-  </li>
-</ul>
+  </mat-grid-tile>
+</mat-grid-list>

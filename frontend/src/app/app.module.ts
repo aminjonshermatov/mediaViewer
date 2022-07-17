@@ -8,15 +8,18 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatCardModule} from "@angular/material/card";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {SwiperModule} from "swiper/angular";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NodeComponent} from './node/node.component';
-import { FileComponent } from './node/file/file.component';
-import { FolderComponent } from './node/folder/folder.component';
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatCardModule} from "@angular/material/card";
-import { ElevationDirective } from './node/elevation.directive';
+import {FileComponent} from './node/file/file.component';
+import {FolderComponent} from './node/folder/folder.component';
+import {ElevationDirective} from './node/elevation.directive';
+import { GalleryModalComponent } from './node/gallery-modal/gallery-modal.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { ElevationDirective } from './node/elevation.directive';
     NodeComponent,
     FileComponent,
     FolderComponent,
-    ElevationDirective
+    ElevationDirective,
+    GalleryModalComponent
   ],
     imports: [
         BrowserModule,
@@ -38,7 +42,9 @@ import { ElevationDirective } from './node/elevation.directive';
         MatSnackBarModule,
         HttpClientModule,
         MatGridListModule,
-        MatCardModule
+        MatCardModule,
+        SwiperModule,
+        MatDialogModule
     ],
   providers: [],
   bootstrap: [AppComponent]

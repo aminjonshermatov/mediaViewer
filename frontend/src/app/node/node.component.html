@@ -1,5 +1,3 @@
-<span>Breakpoint: {{ cols$ | async }}</span>
-
 <mat-grid-list [cols]="cols$ | async" rowHeight="11:10">
   <mat-grid-tile *ngFor="let file of $any(files$) | async">
     <ng-container *ngIf="isFiles$ | async">

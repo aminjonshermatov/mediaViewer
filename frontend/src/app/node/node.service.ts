@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, map, tap} from "rxjs";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
 
 import {environment} from "../../environments/environment";
 import {NotificationService} from "../notification.service";
@@ -16,10 +16,12 @@ export class NodeService {
   private readonly baseUrl: string = environment.baseUrl;
 
   public readonly filesSub$: BehaviorSubject<(IFile | IFolder)[]> = new BehaviorSubject<(IFile | IFolder)[]>([]);
-  public readonly isFilesSub$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public readonly isFilesSub$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  public readonly currentFolderSub$: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor(private readonly httpClient: HttpClient,
-              private readonly notificationService: NotificationService) { }
+              private readonly notificationService: NotificationService) {
+  }
 
   public getFolders(): void {
     this.httpClient.get<[string][]>(`${this.baseUrl}/`)
@@ -29,33 +31,44 @@ export class NodeService {
         tap(() => this.isFilesSub$.next(false)),
       ).subscribe({
       error: (err) => {
-        this.notificationService.error(err.error['detail'])
+        this.notificationService.error(NodeService._getErrorMsg(err));
         this.filesSub$.next([]);
       }
     });
   }
 
   public getFiles(folderName: string): void {
-    this.httpClient.get<[number, string][]>(`${this.baseUrl}/${folderName}`)
+    this.httpClient.get<[number, string, string][]>(`${this.baseUrl}/${folderName}`)
       .pipe(
         map(files => files.map(fileData => NodeService._filesFactory(FileType.File, fileData))),
         tap(files => this.filesSub$.next(files)),
         tap(() => this.isFilesSub$.next(true)),
       ).subscribe({
       error: (err) => {
-        this.notificationService.error(err.error['detail'])
+        this.notificationService.error(NodeService._getErrorMsg(err));
         this.filesSub$.next([]);
       }
     });
   }
 
-  private static _filesFactory(type: FileType, args: [string] | [number, string]): IFile | IFolder {
+  public getFileBlob(fileId: number, type: string): Observable<Blob> {
+    return this.httpClient.get<Blob>(`${this.baseUrl}/${this.currentFolderSub$.value}/${fileId}`, {responseType: 'blob' as 'json'})
+      .pipe(
+        map(data => new Blob([data], {type}))
+      );
+  }
+
+  private static _filesFactory(type: FileType, args: [string] | [number, string, string]): IFile | IFolder {
     switch (type) {
       case FileType.File:
-        return new File(args as [number, string]);
+        return new File(args as [number, string, string]);
       case FileType.Folder:
         return new Folder(args as [string]);
     }
+  }
+
+  private static _getErrorMsg(err?: any): string {
+    return err?.error['detail'] || err?.message || 'Unknown error!';
   }
 
 }

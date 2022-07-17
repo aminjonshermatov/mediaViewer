@@ -1,0 +1,39 @@
+<div mat-dialog-title class="dialog-title">
+  <h3>{{ files[currentIdx].title }}</h3>
+  <button mat-icon-button aria-label="close dialog" mat-dialog-close="true">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+
+  <swiper
+    #swiper
+    style="--swiper-navigation-color: #fff;--swiper-pagination-color: #fff"
+    [spaceBetween]="10"
+    [navigation]="true"
+    [thumbs]="{ swiper: thumbsSwiper }"
+    class="mySwiper2"
+  >
+    <ng-template swiperSlide *ngFor="let file of files">
+      <img [src]="baseUrl + '/' + (currentFolder$ | async) + '/' + file.id" [alt]="file.title" />
+    </ng-template>
+  </swiper>
+  <swiper
+    (swiper)="thumbsSwiper = $event"
+    [spaceBetween]="10"
+    [slidesPerView]="4"
+    [freeMode]="true"
+    [watchSlidesProgress]="true"
+    class="mySwiper"
+  >
+    <ng-template swiperSlide *ngFor="let file of files">
+      <img [src]="baseUrl + '/' + (currentFolder$ | async) + '/' + file.id" [alt]="file.title" />
+    </ng-template>
+  </swiper>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" mat-dialog-close="true" tabindex="-1">Close</button>
+</mat-dialog-actions>

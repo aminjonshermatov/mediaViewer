@@ -52,7 +52,11 @@ export class NodeComponent implements OnInit {
     this.route.paramMap
       .subscribe(params => {
           if (!params.has('folderName')) this.nodeService.getFolders();
-          else this.nodeService.getFiles(params.get('folderName') || '')
+          else {
+            const folderName = params.get('folderName');
+            this.nodeService.getFiles(folderName || '');
+            if (folderName) this.nodeService.currentFolderSub$.next(folderName);
+          }
         }
       )
   }

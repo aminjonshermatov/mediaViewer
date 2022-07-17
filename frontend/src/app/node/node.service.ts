@@ -16,7 +16,8 @@ export class NodeService {
   private readonly baseUrl: string = environment.baseUrl;
 
   public readonly filesSub$: BehaviorSubject<(IFile | IFolder)[]> = new BehaviorSubject<(IFile | IFolder)[]>([]);
-  public readonly isFilesSub$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public readonly isFilesSub$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  public readonly currentFolderSub$: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor(private readonly httpClient: HttpClient,
               private readonly notificationService: NotificationService) { }
@@ -29,7 +30,7 @@ export class NodeService {
         tap(() => this.isFilesSub$.next(false)),
       ).subscribe({
       error: (err) => {
-        this.notificationService.error(err.error['detail'])
+        this.notificationService.error(NodeService._getErrorMsg(err));
         this.filesSub$.next([]);
       }
     });
@@ -43,7 +44,7 @@ export class NodeService {
         tap(() => this.isFilesSub$.next(true)),
       ).subscribe({
       error: (err) => {
-        this.notificationService.error(err.error['detail'])
+        this.notificationService.error(NodeService._getErrorMsg(err));
         this.filesSub$.next([]);
       }
     });
@@ -56,6 +57,10 @@ export class NodeService {
       case FileType.Folder:
         return new Folder(args as [string]);
     }
+  }
+
+  private static _getErrorMsg(err?: any): string {
+    return err?.error['detail'] || err?.message || 'Unknown error!';
   }
 
 }

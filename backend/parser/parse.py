@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 
 from backend.util.db import create_connection, execute_query
+from backend.util.mime_types import MEDIA_TYPES
 
 
 def check_path(filename):
@@ -37,14 +38,18 @@ def check_path(filename):
     get_file(path)
     clear_table = "delete from mediaFiles"
     execute_query(connection, clear_table)
+    print(arr)
     for p in arr:
+        print(p)
         if p:
             a = p[len(path):].split('/')
             if os.path.isfile(p):
                 utc = str(datetime.utcnow())
-
-                sql = "insert into mediaFiles (file_name, directory_name, path, is_visible, added_date, updated_date) " \
-                      "values ('"+a[-1]+"', '"+a[1]+"', '"+p+"', 1,'"+utc+"','"+utc+"');"
+                print(a[-1].split('.')[-1])
+                mime_type = MEDIA_TYPES[a[-1].split('.')[-1]].lower()
+                print(mime_type)
+                sql = "insert into mediaFiles (file_name, directory_name, path, is_visible, added_date, updated_date, mime_type) " \
+                      "values ('"+a[-1]+"', '"+a[1]+"', '"+p+"', 1,'"+utc+"','"+utc+"','"+mime_type+"');"
                 execute_query(connection, sql)
 
 

@@ -5,7 +5,6 @@ def create_connection(path):
     connection = None
     try:
         connection = connect(path)
-        print("Connection to SQLite DB successful")
     except Error as e:
         print(f"The error '{e}' occurred")
 
@@ -17,7 +16,6 @@ def execute_query(connection, query):
     try:
         cursor.execute(query)
         connection.commit()
-        print("Query executed successfully")
     except Error as e:
         print(f"The error '{e}' occurred")
 

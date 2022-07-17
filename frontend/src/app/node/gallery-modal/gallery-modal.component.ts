@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Observable} from "rxjs";
 import SwiperCore, { FreeMode, Navigation, Thumbs } from "swiper";
+import {SwiperComponent} from "swiper/angular";
 
 import {environment} from "../../../environments/environment";
 import {IFile} from "../models/File";
 import {NodeService} from "../node.service";
-import {SwiperComponent} from "swiper/angular";
-import {Observable} from "rxjs";
 
 SwiperCore.use([FreeMode, Navigation, Thumbs]);
 

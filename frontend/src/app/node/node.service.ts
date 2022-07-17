@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, map, tap} from "rxjs";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
 
 import {environment} from "../../environments/environment";
 import {NotificationService} from "../notification.service";
@@ -20,7 +20,8 @@ export class NodeService {
   public readonly currentFolderSub$: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor(private readonly httpClient: HttpClient,
-              private readonly notificationService: NotificationService) { }
+              private readonly notificationService: NotificationService) {
+  }
 
   public getFolders(): void {
     this.httpClient.get<[string][]>(`${this.baseUrl}/`)
@@ -37,7 +38,7 @@ export class NodeService {
   }
 
   public getFiles(folderName: string): void {
-    this.httpClient.get<[number, string][]>(`${this.baseUrl}/${folderName}`)
+    this.httpClient.get<[number, string, string][]>(`${this.baseUrl}/${folderName}`)
       .pipe(
         map(files => files.map(fileData => NodeService._filesFactory(FileType.File, fileData))),
         tap(files => this.filesSub$.next(files)),
@@ -50,10 +51,17 @@ export class NodeService {
     });
   }
 
-  private static _filesFactory(type: FileType, args: [string] | [number, string]): IFile | IFolder {
+  public getFileBlob(fileId: number, type: string): Observable<Blob> {
+    return this.httpClient.get<Blob>(`${this.baseUrl}/${this.currentFolderSub$.value}/${fileId}`, {responseType: 'blob' as 'json'})
+      .pipe(
+        map(data => new Blob([data], {type}))
+      );
+  }
+
+  private static _filesFactory(type: FileType, args: [string] | [number, string, string]): IFile | IFolder {
     switch (type) {
       case FileType.File:
-        return new File(args as [number, string]);
+        return new File(args as [number, string, string]);
       case FileType.Folder:
         return new Folder(args as [string]);
     }

@@ -1,8 +1,10 @@
 import os
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.responses import StreamingResponse
+from starlette.responses import StreamingResponse, HTMLResponse
 from typing import BinaryIO
+
+from starlette.staticfiles import StaticFiles
 
 from backend.util import db, mime_types
 
@@ -18,8 +20,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount("/static", StaticFiles(directory='backend/static'), name="static")
+
 
 @app.get('/')
+def get_front():
+    with open('backend/static/index.html', 'r') as file_index:
+        html_content = file_index.read()
+    return HTMLResponse(html_content, status_code=200)
+
+
+@app.get('/api/')
 def read_directories():
     cur_dir = os.getcwd()
     connection = db.create_connection(cur_dir + "/backend/parser/data.db")
@@ -32,7 +43,7 @@ def read_directories():
     return db_directories
 
 
-@app.get('/{directory_name}')
+@app.get('/api/{directory_name}')
 def read_files(directory_name: str):
     cur_dir = os.getcwd()
     connection = db.create_connection(cur_dir + "/backend/parser/data.db")
@@ -107,7 +118,7 @@ def range_requests_response(request: Request,
     )
 
 
-@app.get('/{directory_name}/{file_id}')
+@app.get('/api/{directory_name}/{file_id}')
 def read_file(request: Request, file_id: int):
     cur_dir = os.getcwd()
     connection = db.create_connection(cur_dir + "/backend/parser/data.db")

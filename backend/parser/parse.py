@@ -1,6 +1,7 @@
 import configparser
 import os
 from datetime import datetime
+import pathlib
 
 from backend.util.db import create_connection, execute_query
 from backend.util.mime_types import MEDIA_TYPES
@@ -38,19 +39,14 @@ def check_path(filename):
     get_file(path)
     clear_table = "delete from mediaFiles"
     execute_query(connection, clear_table)
-    print(arr)
     for p in arr:
-        print(p)
-        if p:
+        if p and pathlib.Path(p).suffix and os.path.isfile(p):
             a = p[len(path):].split('/')
-            if os.path.isfile(p):
-                utc = str(datetime.utcnow())
-                print(a[-1].split('.')[-1])
-                mime_type = MEDIA_TYPES[a[-1].split('.')[-1]].lower()
-                print(mime_type)
-                sql = "insert into mediaFiles (file_name, directory_name, path, is_visible, added_date, updated_date, mime_type) " \
-                      "values ('"+a[-1]+"', '"+a[1]+"', '"+p+"', 1,'"+utc+"','"+utc+"','"+mime_type+"');"
-                execute_query(connection, sql)
+            utc = str(datetime.utcnow())
+            mime_type = MEDIA_TYPES[pathlib.Path(p).suffix.lower()[1:]]
+            sql = "insert into mediaFiles (file_name, directory_name, path, is_visible, added_date, updated_date, mime_type) " \
+                  "values ('"+a[-1]+"', '"+a[1]+"', '"+p+"', 1,'"+utc+"','"+utc+"','"+mime_type+"');"
+            execute_query(connection, sql)
 
 
 def main():

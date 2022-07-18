@@ -20,14 +20,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory='backend/static'), name="static")
-
 
 @app.get('/')
 def get_front():
     with open('backend/static/index.html', 'r') as file_index:
         html_content = file_index.read()
     return HTMLResponse(html_content, status_code=200)
+
+
+app.mount('/static', StaticFiles(directory='backend/static'), name='')
 
 
 @app.get('/api/')

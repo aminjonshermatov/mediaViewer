@@ -28,9 +28,6 @@ def get_front():
     return HTMLResponse(html_content, status_code=200)
 
 
-app.mount('/static', StaticFiles(directory='backend/static'), name='')
-
-
 @app.get('/api/')
 def read_directories():
     cur_dir = os.getcwd()
@@ -48,7 +45,8 @@ def read_directories():
 def read_files(directory_name: str):
     cur_dir = os.getcwd()
     connection = db.create_connection(cur_dir + "/backend/parser/data.db")
-    sql = "select id, file_name, mime_type from mediaFiles where directory_name='" + directory_name + "' and is_visible=1;"
+    sql = "select id, file_name, mime_type from mediaFiles where directory_name='" + directory_name + "' and " \
+                                                                                                      "is_visible=1; "
     db_files = db.execute_read_query(connection, sql)
 
     if not db_files:
@@ -131,5 +129,8 @@ def read_file(request: Request, file_id: int):
                             detail=f"File with id: {file_id} not found.")
     content_type = db_file[0][0].split('.')
     return range_requests_response(request=request,
-                                         file_path=db_file[0][0],
-                                         content_type=mime_types.MEDIA_TYPES[content_type[-1]])
+                                   file_path=db_file[0][0],
+                                   content_type=mime_types.MEDIA_TYPES[content_type[-1]])
+
+
+app.mount('/', StaticFiles(directory='backend/static'), name='')

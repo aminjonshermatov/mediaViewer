@@ -1,5 +1,15 @@
 #! /usr/bin/bash
 
-cd /home/aminjon/projects/mediaViewer/frontend
+rm -r backend/static/*
+cd frontend
 
-ng serve
+case $1 in
+  -p)   ng build -c production ;;
+  -*|*) ng build -c development ;;
+esac
+
+cd ../
+
+mv frontend/dist/media-viewer/*  backend/static/
+
+rm -r frontend/dist

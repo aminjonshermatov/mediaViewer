@@ -1,10 +1,46 @@
-<mat-grid-list [cols]="cols$ | async" rowHeight="11:10">
-  <mat-grid-tile *ngFor="let file of $any(files$) | async">
-    <ng-container *ngIf="isFiles$ | async">
-      <app-file [file]="file"></app-file>
-    </ng-container>
-    <ng-container *ngIf="!(isFiles$ | async)">
-      <app-folder [folder]="file"></app-folder>
-    </ng-container>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="content">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div
+      [fxFlex]="(100 / (cols$ | async)) + '%'"
+      fxFlex.xs="100%"
+      fxFlex.sm="33%"
+      *ngFor="let file of $any(files$) | async; let idx = index"
+    >
+      <ng-container *ngIf="isFiles$ | async">
+        <mat-card appElevation>
+          <mat-card-header>
+            <mat-card-title [matTooltip]="file.title">{{ file.title | truncate : 20 }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content fxLayout="row" fxLayoutAlign="center">
+            <img mat-card-image src="../../assets/images/file.png" [alt]="file.title">
+          </mat-card-content>
+          <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+            <button mat-raised-button color="primary" [routerLink]="[idx]">
+              <mat-icon>play_arrow</mat-icon>
+              Play
+            </button>
+            <button mat-raised-button style="background-color: #66BB6A" (click)="downloadFile(file.id, file.title, file.m_type)">
+              <mat-icon>file_download</mat-icon>
+              Download
+            </button>
+            <button mat-raised-button mat-icon-button (click)="shareFile(file)"><mat-icon>share</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+      </ng-container>
+      <ng-container *ngIf="!(isFiles$ | async)">
+        <mat-card appElevation>
+          <mat-card-header>
+            <mat-card-title [matTooltip]="file.name">{{ file.name | truncate : 20 }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content fxLayout="row" fxLayoutAlign="center">
+            <img mat-card-image src="../../assets/images/folder.png" [alt]="file.name">
+          </mat-card-content>
+          <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+            <button mat-raised-button color="accent" [routerLink]="[file.name]">Go to folder</button>
+            <button mat-raised-button mat-icon-button (click)="shareFolder(file)"><mat-icon>share</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+      </ng-container>
+    </div>
+  </div>
+</div>

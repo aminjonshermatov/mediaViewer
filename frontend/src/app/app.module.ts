@@ -10,42 +10,50 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatDialogModule} from "@angular/material/dialog";
 import {SwiperModule} from "swiper/angular";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {ShareButtonsModule} from 'ngx-sharebuttons/buttons';
+import {ShareIconsModule} from 'ngx-sharebuttons/icons';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NodeComponent} from './node/node.component';
-import {FileComponent} from './node/file/file.component';
-import {FolderComponent} from './node/folder/folder.component';
 import {ElevationDirective} from './node/elevation.directive';
-import { GalleryModalComponent } from './node/gallery-modal/gallery-modal.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import {GalleryComponent} from './node/gallery/gallery.component';
+import {ShareSocialComponent} from './node/share-social/share-social.component';
+import {TruncatePipe} from './truncate.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     NodeComponent,
-    FileComponent,
-    FolderComponent,
     ElevationDirective,
-    GalleryModalComponent
+    GalleryComponent,
+    ShareSocialComponent,
+    TruncatePipe
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatListModule,
-        MatSnackBarModule,
-        HttpClientModule,
-        MatGridListModule,
-        MatCardModule,
-        SwiperModule,
-        MatDialogModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatSnackBarModule,
+    HttpClientModule,
+    MatGridListModule,
+    MatCardModule,
+    SwiperModule,
+    FlexLayoutModule,
+    MatTooltipModule,
+    ShareButtonsModule,
+    ShareIconsModule,
+    MatDialogModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

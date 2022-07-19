@@ -4,10 +4,16 @@
 @import "~swiper/swiper-bundle.min.css";
 @import "~swiper/modules/free-mode/free-mode.min.css";
 @import "~swiper/modules/navigation/navigation.min.css";
-@import "~swiper/modules/thumbs/thumbs.min.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Poppins; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Poppins;
+  background-color: #E8EAF6;
+}
 
 snack-bar-container.success {
   background: rgb(65, 252, 134);

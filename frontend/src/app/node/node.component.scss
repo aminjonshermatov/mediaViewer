@@ -1,0 +1,17 @@
+.mat-card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-height: 1.5rem;        /* fallback */
+  height: 3rem;       /* fallback */
+}
+
+.mat-card-image {
+  width: auto;
+  height: auto;
+
+  max-width: 150px;
+  max-height: 150px;
+}

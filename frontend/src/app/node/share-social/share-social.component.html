@@ -1,0 +1,25 @@
+<div mat-dialog-title class="dialog-title">
+  <h3>Share with social media</h3>
+  <button mat-icon-button mat-raised-button aria-label="close dialog" mat-dialog-close="true">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content fxLayout="row wrap" fxLayoutGap="10px grid">
+  <div
+    [fxFlex]="(100 / (cols$ | async)) + '%'"
+    *ngFor="let socialMedia of shareWith"
+  >
+    <share-button
+      [matTooltip]="socialMedia | titlecase"
+      [button]="socialMedia"
+      theme="circles-dark"
+      [showIcon]="true"
+      [showText]="false"
+      [title]="data.title"
+      [url]="data.url"
+      [description]="data.description"
+      [image]="data.imagePath"
+      [autoSetMeta]="true"
+    ></share-button>
+  </div>
+</div>

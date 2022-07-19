@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GalleryModalComponent } from './gallery-modal.component';
+import { ShareSocialComponent } from './share-social.component';
 
-describe('GalleryModalComponent', () => {
-  let component: GalleryModalComponent;
-  let fixture: ComponentFixture<GalleryModalComponent>;
+describe('ShareSocialComponent', () => {
+  let component: ShareSocialComponent;
+  let fixture: ComponentFixture<ShareSocialComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GalleryModalComponent ]
+      declarations: [ ShareSocialComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GalleryModalComponent);
+    fixture = TestBed.createComponent(ShareSocialComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

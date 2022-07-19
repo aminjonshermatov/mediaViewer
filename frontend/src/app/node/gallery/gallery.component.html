@@ -1,0 +1,68 @@
+<swiper
+  #swiper
+  style="--swiper-navigation-color: #fff;--swiper-pagination-color: #fff"
+  [spaceBetween]="10"
+  [lazy]="true"
+  [zoom]="true"
+  [navigation]="true"
+  [mousewheel]="true"
+  [keyboard]="{
+      enabled: true
+    }"
+  [pagination]="{
+      clickable: true
+    }"
+  [thumbs]="{ swiper: thumbsSwiper }"
+  (activeIndexChange)="onChange($event)"
+  [initialSlide]="initialSlide"
+  noSwipingClass="swiper-no-swiping"
+  class="mySwiper2"
+>
+  <ng-template swiperSlide *ngFor="let file of files" [ngSwitch]="true">
+    <img
+      [attr.data-src]="baseUrl + '/' + (currentFolder$ | async) + '/' + file.id"
+      [alt]="file.title"
+      *ngSwitchCase="file.m_type.includes('image/')"
+      class="swiper-lazy"
+    />
+    <video
+      *ngSwitchCase="file.m_type.includes('video/')"
+      [attr.data-poster]="baseUrl + '/' + (currentFolder$ | async) + '/' + file.id"
+      [attr.data-src]="baseUrl + '/' + (currentFolder$ | async) + '/' + file.id"
+      autoplay="false"
+      preload="none"
+      muted="muted"
+      playsinline=""
+      controls
+      class="swiper-lazy"
+    >
+      <source
+        [attr.data-src]="baseUrl + '/' + (currentFolder$ | async) + '/' + file.id"
+        [type]="file.m_type"
+      />
+      Browser not supported
+    </video>
+    <audio
+      controls
+      autoplay
+      *ngSwitchCase="file.m_type.includes('audio/')"
+    >
+      <source
+        [src]="baseUrl + '/' + (currentFolder$ | async) + '/' + file.id"
+        [type]="file.m_type"
+      />
+      Your browser does not support the audio element.
+    </audio>
+    <div *ngSwitchDefault>
+      <h4>{{ file.title }}</h4>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="openFile(file.id, file.m_type)"
+      >
+        <mat-icon>file_download</mat-icon>
+        Download File
+      </button>
+    </div>
+  </ng-template>
+</swiper>

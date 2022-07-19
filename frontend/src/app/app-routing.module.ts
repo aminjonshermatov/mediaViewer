@@ -2,21 +2,22 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {NodeComponent} from "./node/node.component";
-import {GalleryModalComponent} from "./node/gallery-modal/gallery-modal.component";
+import {GalleryComponent} from "./node/gallery/gallery.component";
 
 const routes: Routes = [
   {path: '', component: NodeComponent, pathMatch: 'full'},
   {
     path: ':folderName',
     component: NodeComponent,
-    children: [
-      { path: 'file/:fileId', component: GalleryModalComponent, }
-    ]
+  },
+  {
+    path: ':folderName/:fileId',
+    component: GalleryComponent,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
